@@ -1,0 +1,12 @@
+<form [formGroup]="newSetForm" (submit)="createSet()">
+    <label for="name">Name</label><br />
+    <input formControlName="name" /><br />
+  
+    <label for="year">Year of Release</label><br />
+    <input formControlName="year" /><br />
+  
+    <label for="numParts">Number of Parts</label><br />
+    <input formControlName="numParts" /><br />
+  
+    <button>Create new set</button>
+  </form>

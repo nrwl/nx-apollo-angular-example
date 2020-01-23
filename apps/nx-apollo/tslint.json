@@ -1,0 +1,17 @@
+{
+  "extends": "../../tslint.json",
+  "rules": {
+    "directive-selector": [
+      true,
+      "attribute",
+      "nxApolloAngularExample",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "nx-apollo-angular-example",
+      "kebab-case"
+    ]
+  }
+}
