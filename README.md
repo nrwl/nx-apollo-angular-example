@@ -1,4 +1,4 @@
-# NxApolloExample
+# Nx Apollo Angular Example
 
 This project was generated using [Nx](https://nx.dev).
 
@@ -13,8 +13,11 @@ GraphQL API
 [Angular](https://angular.io)
 - `npm start nx-apollo-angular`
 
+## Interested in using React?
+This same example can be implemented in React. The repo for that can be found here: [https://github.com/nrwl/nx-apollo-react-example](https://github.com/nrwl/nx-apollo-react-example)
+
 ## What you’ll create
-In this article, we’ll be creating a simple GraphQL API that will allow us to track some information about Lego sets. We’ll create this API using NestJS, and it will be consumed by both an Angular and a React application. We’ll have this all inside of a Nx Workspace in a single repository.
+In this article, we’ll be creating a simple GraphQL API that will allow us to track some information about Lego sets. We’ll create this API using NestJS, and it will be consumed by an Angular application. We’ll have this all inside of a Nx Workspace in a single repository.
 
 ## What you’ll learn
 In this article, you’ll learn how to:
@@ -32,8 +35,7 @@ Let’s get started by creating our Nx workspace. We’ll start with an Angular 
 When prompted, answer the prompts as follows:
 
 ```bash
-npx create-nx-workspace --preset=angular --cli=angular
-npx: installed 173 in 7.776s
+create-nx-workspace --preset=angular --cli=angular
 ? Workspace name (e.g., org name)     nx-apollo-angular-example
 ? Application name                    nx-apollo
 ? Default stylesheet format           CSS
@@ -201,13 +203,7 @@ mutation addSet {
 
 Now that our API is working, we’re ready to build a frontend to access this.
 
-## Create Angular App
-
-Just like with Nest, we need to add Angular support to our workspace and create an application:
-
-`npm install --save-dev @nrwl/angular`
-
-`ng generate @nrwl/angular:application nx-apollo-angular --style css --routing false`
+## Add Apollo to Angular App
 
 We’ll be using the Apollo client to consume our GraphQL API, so let’s install that. The Apollo team has made it easy for us by supporting the Angular CLI’s add command.
 
@@ -216,7 +212,7 @@ We’ll be using the Apollo client to consume our GraphQL API, so let’s instal
 When that’s done running, you’ll have a new file in your Angular application named graph.module.ts. Open it up and add the URI of your GraphQL api at the top of this file.
 
 ```typescript
-// apps/nx-apollo-angular/src/app/graphql.module.ts
+// apps/nx-apollo/src/app/graphql.module.ts
 const uri = 'http://localhost:3333/graphql'; // <-- add the URL of the GraphQL server here
 ```
 
@@ -225,9 +221,9 @@ Nx alllows us to break down our code into well-organized libraries for consumpti
 
 To create the described libraries, we run these commands:
 
-`nx generate @nrwl/angular:library data-access --style css`
+`ng generate @nrwl/angular:library data-access --style css`
 
-`nx generate @nrwl/angular:library feature-sets --style css`
+`ng generate @nrwl/angular:library feature-sets --style css`
 
 ## Setup Angular Code Generation
 We’ll take advantage of a tool called GraphQL Code Generator to make development of our data-access library a little faster. As always, first we install dependencies:
@@ -348,7 +344,7 @@ export class FeatureSetsModule {}
 In the SetList component, add the following:
 
 ```html
-<!-- libs/angular/feature-sets/src/lib/set-list/set-list.component.html -->
+<!-- libs/feature-sets/src/lib/set-list/set-list.component.html -->
 
 <ul>
   <li *ngFor="let set of sets$ | async">
@@ -358,7 +354,7 @@ In the SetList component, add the following:
 ```
 
 ```css
-/* libs/angular/feature-sets/src/lib/set-list/set-list.component.css */
+/* libs/feature-sets/src/lib/set-list/set-list.component.css */
 
 :host {
   font-family: sans-serif;
@@ -503,14 +499,14 @@ Final step: import our modules, bring those new components into our app componen
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AngularFeatureSetsModule } from '@nx-apollo-example/angular/feature-sets';
+import { FeatureSetsModule } from '@nx-apollo-angular-example/feature-sets';
 import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql.module';
 
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, HttpClientModule, GraphQLModule, AngularFeatureSetsModule],
+  imports: [BrowserModule, HttpClientModule, GraphQLModule, FeatureSetsModule],
   providers: [],
   bootstrap: [AppComponent]
 })
