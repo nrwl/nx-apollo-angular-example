@@ -11,53 +11,42 @@ GraphQL API
 - `npm start api`
 
 [Angular](https://angular.io)
-- `npm start nx-apollo-angular`
-
-## Interested in using React?
-This same example can be implemented in React. The repo for that can be found here: [https://github.com/nrwl/nx-apollo-react-example](https://github.com/nrwl/nx-apollo-react-example)
+- `npm start nx-apollo`
 
 ## What you’ll create
-In this article, we’ll be creating a simple GraphQL API that will allow us to track some information about Lego sets. We’ll create this API using NestJS, and it will be consumed by an Angular application. We’ll have this all inside of a Nx Workspace in a single repository.
+In this article, you will build a simple GraphQL API that tracks some information about Lego sets. You'll create this API using NestJS, and it will be consumed by an Angular application. You'll have this all inside of an Nx Workspace in a single repository.
 
 ## What you’ll learn
-In this article, you’ll learn how to:
-- Create an Nx workspace for both frontend and backend applications
-- Create a GraphQL API using NestJS
-- Autogenerate frontend code based on your GraphQL schema
-- Create an Angular application to consume your GraphQL api
+In this article, you'll learn how to:
+* Create an Nx workspace for both frontend and backend applications
+* Create a GraphQL API using NestJS
+* Autogenerate frontend code based on your GraphQL schema
+* Create an Angular application to consume your GraphQL api
 
 ## Create a new workspace
 
-Let’s get started by creating our Nx workspace. We’ll start with an Angular workspace that uses the Angular CLI:
+Start by creating an Nx workspace:
 
-`npx create-nx-workspace --preset=angular --cli=angular`
+`npx create-nx-workspace@latest nx-apollo-angular-example`
 
 When prompted, answer the prompts as follows:
 
 ```bash
-create-nx-workspace --preset=angular --cli=angular
-? Workspace name (e.g., org name)     nx-apollo-angular-example
+? What to create in the new workspace angular-nest      [a workspace with a 
+full stack application (Angular + Nest)]
 ? Application name                    nx-apollo
 ? Default stylesheet format           CSS
 ```
 
 ## Create GraphQL API
-We’ll be using the NestJS framework to create our GraphQL API. First, let’s add NestJS to our Nx workspace and create an application:
-
-`npm install --save-dev @nrwl/nest`
-
-`ng generate @nrwl/nest:application api`
-
-When prompted for a directory, press enter. This will place the api application in the roots of our `apps` directory.
-
-Once our application is created, we’ll install the GraphQL modules needed for Nest
+The `angular-nest` preset for your workspace has already created a Nest app for you named api. Install the GraphQL modules needed for Nest:
 
 `npm install @nestjs/graphql apollo-server-express graphql-tools graphql`
 
-We’re going to need a GraphQL schema to create our API, so let’s create a very simple one with a single query and a single mutation. Create a file named `schema.graphql` in the api application:
+You need a GraphQL schema to create the API, so write a very simple one with a single query and a single mutation. Create a file named `schema.graphql` in the api application:
 
 ```
-// apps/api/src/app/schema.graphql
+# apps/api/src/app/schema.graphql
 
 type Set {
     id: Int!
@@ -75,7 +64,7 @@ type Mutation {
 }
 ```
 
-Now we can import the GraphQLModule and use that schema in NestJS.
+Import the `GraphQLModule` and use that schema in NestJS.
 
 ```typescript
 // apps/api/src/app/app.module.ts
@@ -98,13 +87,13 @@ import { AppService } from './app.service';
 export class AppModule {}
 ```
 
-This is already enough to see some progress when we run our API application.
+This is already enough to see some progress when you run the `api` application.
 
 `npm start api`
 
-When the application is running, you can bring up the GraphQL playground in your browser at [http://localhost:3333/graphql](http://localhost:3333/graphql)
+When the application is running, bring up the GraphQL playground in your browser at [http://localhost:3333/graphql](http://localhost:3333/graphql)
 
-Here you can inspect your GraphQL schema as well as submit queries. The queries won’t return anything right now because we haven’t provided any data. Let’s take care of that by writing a resolver. Create a new file in your api project called `set.resolver.ts`. Then add this code:
+Here you can inspect your GraphQL schema as well as submit queries. The queries don’t return anything right now because no data has been provided. You need a resolver to do that. Create a new file in your `api` project called `set.resolver.ts`. Then add this code:
 
 ```typescript
 // apps/api/src/app/set.resolver.ts
@@ -160,7 +149,7 @@ export class SetResolver {
 }
 ```
 
-This is a very simple resolver which will hold our data in memory. It will return the current contents of the sets array for the allSets query and allow users to add a new set using the addSet mutation. Once we have this written, we need to add it to our providers array in our app module:
+This is a very simple resolver that holds data in memory. It returns the current contents of the sets array for the `allSets` query and allows users to add a new set using the `addSet` mutation. Add this resolver to the providers array in your app module:
 
 ```typescript
 // apps/api/src/app/app.module.ts
@@ -201,15 +190,15 @@ mutation addSet {
 }
 ```
 
-Now that our API is working, we’re ready to build a frontend to access this.
+Now that the API is working, you’re ready to build a frontend to access this.
 
-## Add Apollo to Angular App
+## Add Apollo client to Angular App
 
-We’ll be using the Apollo client to consume our GraphQL API, so let’s install that. The Apollo team has made it easy for us by supporting the Angular CLI’s add command.
+The Apollo client makes it easy to consume your GraphQL API. The Apollo team has made it easy to install by supporting the Angular CLI’s add command:
 
 `ng add apollo-angular`
 
-When that’s done running, you’ll have a new file in your Angular application named graph.module.ts. Open it up and add the URI of your GraphQL api at the top of this file.
+You now have a file in your Angular application named `graph.module.ts`. Open it up, and add the URI of your GraphQL api at the top of this file.
 
 ```typescript
 // apps/nx-apollo/src/app/graphql.module.ts
@@ -217,7 +206,7 @@ const uri = 'http://localhost:3333/graphql'; // <-- add the URL of the GraphQL s
 ```
 
 ## Create Angular libraries
-Nx alllows us to break down our code into well-organized libraries for consumption by apps, so let's create a couple of Angular libraries to organize our work. We'll create a data-access library which will handle communication with the backend, and a feature-sets library which will include our container components for displaying the Lego set data. In a  real app, we might also create a ui library which would include our reusable presentational components, but we'll leave that out in this example. For more information on how to organize your Angular monorepo using Nx, read our book *Enterprise Angular Monorepo Pattern* by registering at [Nrwl Connect](https://connect.nrwl.io/).
+Nx helps you break down your code into well-organized libraries for consumption by apps, so create a couple of Angular libraries to organize your work. Create a data-access library that handles communication with the backend and a feature-sets library that includes container components for displaying the Lego set data. In a real app, you might also create a ui library that includes reusable presentational components, but that is not part of this example. For more information on how to organize your Angular monorepo using Nx, read our book *Enterprise Angular Monorepo Patterns* by registering at [Nrwl Connect](https://connect.nrwl.io/).
 
 To create the described libraries, we run these commands:
 
@@ -226,11 +215,11 @@ To create the described libraries, we run these commands:
 `ng generate @nrwl/angular:library feature-sets --style css`
 
 ## Setup Angular Code Generation
-We’ll take advantage of a tool called GraphQL Code Generator to make development of our data-access library a little faster. As always, first we install dependencies:
+A tool called GraphQL Code Generator makes the development of your data-access library faster. As always, install dependencies first:
 
 `npm install --save-dev @graphql-codegen/cli @graphql-codegen/typescript-operations @graphql-codegen/typescript-apollo-angular`
 
-We’ll need to create some queries and mutations for the frontend to consume GraphQL. Create a folder named `graphql` in your data-access library with a file inside called operations.graphql:
+You need to create some GraphQL queries and mutations for the frontend to consume. Create a folder named `graphql` in your `data-access` library with a file inside called `operations.graphql`:
 
 ```
 # libs/data-access/src/lib/graphql/operations.graphql
@@ -255,7 +244,7 @@ mutation addSet($name: String!, $year: String!, $numParts: Int!) {
 }
 ```
 
-To configure the code generator for Angular, we’ll create a file named codegen.yml in our library:
+Create a file named `codegen.yml` in the data-access library to configure the code generator:
 
 ```yaml
 # libs/data-access/codegen.yml
@@ -270,9 +259,10 @@ generates:
       - "typescript-apollo-angular"
 ```
 
-This configuration will grab all of our GraphQL files and generate all of the needed types and services to consume the API. 
+This configuration grabs all of your GraphQL files and generates all of the needed types and services to consume the API.
 
-To actually run this code generator, we’ll add a new task to our Angular project in our workspace:
+Add a new task in `angular.json` to run this code generator:
+
 ```json
 // angular.json
 
@@ -299,13 +289,14 @@ To actually run this code generator, we’ll add a new task to our Angular proje
 }
 ```
 
-Now we can run that using the Nx CLI:
+Now you can run that task using the Angular CLI:
 
 `ng run data-access:generate`
 
-We should now have a folder called generated in our data-access library with a file named generated.ts. It contains typing information about the GraphQL schema and the operations we defined. It even has some services which will make consuming this api super-fast.
+You should now have a folder called `generated` in your `data-access` library with a file named `generated.ts`. It contains typing information about the GraphQL schema and the operations you defined. It even has some services that make consuming this API super-fast.
 
-To make these available to consumers, we'll export them in the index.ts of our data-access library:
+To make these available to consumers, export them in the `index.ts` file of the `data-access` 
+library:
 
 ```typescript
 // libs/data-access/src/index.ts
@@ -315,13 +306,13 @@ export * from './lib/generated/generated';
 ```
 
 ## Create Angular components
-We now have all we need to start building our Angular components. We’ll create two: a list of Lego sets and a form to add a Lego set. We use the Nx CLI to build these:
+You now have everything needed to start building your Angular components. Create two components: a list of Lego sets and a form to add a Lego set. Use the Angular CLI to scaffold these:
 
 `ng generate @schematics/angular:component --name=SetList --project=feature-sets --export`
 
 `ng generate @schematics/angular:component --name=SetForm --project=feature-sets --export`
 
-Since our form will be using the ReactiveFormsModule, remember to import that into your module. Your `feature-sets.module.ts` file should look like this now.
+The SetForm component needs the `ReactiveFormsModule`, remember to import that into your module. Your file should look like this now:
 
 ```typescript
 // libs/feature-sets/src/lib/feature-sets.module.ts
@@ -341,7 +332,7 @@ export class FeatureSetsModule {}
 
 ```
 
-In the SetList component, add the following:
+In the `SetList` component, add the following:
 
 ```html
 <!-- libs/feature-sets/src/lib/set-list/set-list.component.html -->
@@ -401,9 +392,9 @@ export class SetListComponent {
 }
 ```
 
-Notice how we’ve imported SetListGQL from the data-access library. This is a service generated by GraphQL Code Generator that will allow us to use the results of the SetList query we created earlier. We watch the results of this query and map them so that we get the list of sets. This entire pipeline is type-safe, using the types generated for us.
+Notice how `SetListGQL` is imported from the `data-access` library. This is a service generated by GraphQL Code Generator that provides the results of the `SetList` query. Your component watches the results of this query and maps them to get the list of sets. This entire pipeline is type-safe, using the types generated by GraphQL Code Generator.
 
-In the SetForm component, add the following:
+In the  `SetForm` component, add the following:
 
 ```html
 <!-- libs/feature-sets/src/lib/set-form/set-form.component.html -->
@@ -485,13 +476,11 @@ export class SetFormComponent {
 }
 ```
 
-Again, notice that we've imported services, queries, and typing information from our data-access library to accomplish this.
-
-
+Again, notice that the component imports services, queries, and typing information from the data-access library to accomplish this.
 
 ## Integrate components into app
 
-Final step: import our modules, bring those new components into our app component, and add a little styling
+Final steps: import your modules, bring those new components into the app component, and add a little styling:
 
 ```typescript
 // apps/nx-apollo/src/app/app.module.ts
@@ -544,10 +533,9 @@ If your API isn’t running already, go ahead and start it:
 `npm start api`
 
 And now start your Angular app:
-
 `npm start nx-apollo`
 
-Browse to [http://localhost:4200](http://localhost:4200) and see the results of our work!
+Browse to [http://localhost:4200](http://localhost:4200) and see the results of your work!
 
 ## Further Reading
 NestJS
@@ -558,3 +546,6 @@ Apollo Angular
 
 GraphQL Code Generator
 - [Documentation](https://graphql-code-generator.com/)
+
+## Interested in using React?
+This same example can be implemented in React. The repo for that can be found here: [https://github.com/nrwl/nx-apollo-react-example](https://github.com/nrwl/nx-apollo-react-example)
