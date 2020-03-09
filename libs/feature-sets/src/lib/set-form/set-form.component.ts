@@ -24,8 +24,6 @@ export class SetFormComponent {
     if (this.newSetForm.valid) {
       const newSet = { name: this.newSetForm.get('name').value, year: this.newSetForm.get('year').value, numParts: +this.newSetForm.get('numParts').value };
 
-      this.addSetGQL.mutate(newSet)
-
       this.addSetGQL.mutate(newSet, {
         update: (store, result) => {
           const data: SetListQuery = store.readQuery({ query: SetListDocument });
