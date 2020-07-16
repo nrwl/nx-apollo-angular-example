@@ -80,7 +80,7 @@
               "apps/nx-apollo/tsconfig.app.json",
               "apps/nx-apollo/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/nx-apollo/**"]
+            "exclude": ["**/node_modules/**", "!apps/nx-apollo/**/*"]
           }
         },
         "test": {
@@ -88,7 +88,8 @@
           "options": {
             "jestConfig": "apps/nx-apollo/jest.config.js",
             "tsConfig": "apps/nx-apollo/tsconfig.spec.json",
-            "setupFile": "apps/nx-apollo/src/test-setup.ts"
+            "setupFile": "apps/nx-apollo/src/test-setup.ts",
+            "passWithNoTests": true
           }
         }
       }
@@ -115,7 +116,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": ["apps/nx-apollo-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/nx-apollo-e2e/**"]
+            "exclude": ["**/node_modules/**", "!apps/nx-apollo-e2e/**/*"]
           }
         }
       }
@@ -133,7 +134,8 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
+            "assets": ["apps/api/src/assets"],
+            "buildLibsFromSource": true
           },
           "configurations": {
             "production": {
@@ -162,14 +164,15 @@
               "apps/api/tsconfig.app.json",
               "apps/api/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/api/**"]
+            "exclude": ["**/node_modules/**", "!apps/api/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/api/jest.config.js",
-            "tsConfig": "apps/api/tsconfig.spec.json"
+            "tsConfig": "apps/api/tsconfig.spec.json",
+            "passWithNoTests": true
           }
         }
       }
@@ -187,7 +190,7 @@
               "libs/data-access/tsconfig.lib.json",
               "libs/data-access/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/data-access/**"]
+            "exclude": ["**/node_modules/**", "!libs/data-access/**/*"]
           }
         },
         "test": {
@@ -195,7 +198,8 @@
           "options": {
             "jestConfig": "libs/data-access/jest.config.js",
             "tsConfig": "libs/data-access/tsconfig.spec.json",
-            "setupFile": "libs/data-access/src/test-setup.ts"
+            "setupFile": "libs/data-access/src/test-setup.ts",
+            "passWithNoTests": true
           }
         },
         "generate": {
@@ -224,7 +228,7 @@
               "libs/feature-sets/tsconfig.lib.json",
               "libs/feature-sets/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/feature-sets/**"]
+            "exclude": ["**/node_modules/**", "!libs/feature-sets/**/*"]
           }
         },
         "test": {
@@ -232,7 +236,8 @@
           "options": {
             "jestConfig": "libs/feature-sets/jest.config.js",
             "tsConfig": "libs/feature-sets/tsconfig.spec.json",
-            "setupFile": "libs/feature-sets/src/test-setup.ts"
+            "setupFile": "libs/feature-sets/src/test-setup.ts",
+            "passWithNoTests": true
           }
         }
       },

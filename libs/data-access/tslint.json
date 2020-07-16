@@ -13,5 +13,8 @@
       "nx-apollo-angular-example",
       "kebab-case"
     ]
+  },
+  "linterOptions": {
+    "exclude": ["!**/*"]
   }
 }
