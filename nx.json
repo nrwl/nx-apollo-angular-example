@@ -16,7 +16,9 @@
     },
     "nx-apollo-e2e": {
       "tags": [],
-      "implicitDependencies": ["nx-apollo"]
+      "implicitDependencies": [
+        "nx-apollo"
+      ]
     },
     "api": {
       "tags": []
@@ -32,8 +34,16 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ]
       }
     }
+  },
+  "affected": {
+    "defaultBase": "master"
   }
 }

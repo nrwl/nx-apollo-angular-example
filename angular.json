@@ -87,8 +87,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/nx-apollo/jest.config.js",
-            "tsConfig": "apps/nx-apollo/tsconfig.spec.json",
-            "setupFile": "apps/nx-apollo/src/test-setup.ts",
             "passWithNoTests": true
           }
         }
@@ -171,7 +169,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/api/jest.config.js",
-            "tsConfig": "apps/api/tsconfig.spec.json",
             "passWithNoTests": true
           }
         }
@@ -197,8 +194,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/data-access/jest.config.js",
-            "tsConfig": "libs/data-access/tsconfig.spec.json",
-            "setupFile": "libs/data-access/src/test-setup.ts",
             "passWithNoTests": true
           }
         },
@@ -235,8 +230,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/feature-sets/jest.config.js",
-            "tsConfig": "libs/feature-sets/tsconfig.spec.json",
-            "setupFile": "libs/feature-sets/src/test-setup.ts",
             "passWithNoTests": true
           }
         }
