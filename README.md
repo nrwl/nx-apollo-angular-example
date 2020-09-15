@@ -463,9 +463,9 @@ export class SetFormComponent {
       this.addSetGQL.mutate(newSet, {
         update: (store, result) => {
           const data: SetListQuery = store.readQuery({ query: SetListDocument });
-          data.allSets = [...data.allSets, result.data.addSet];
+          const newData = { allSets: [...data.allSets, result.data.addSet] };
           // Write our data back to the cache.
-          store.writeQuery({ query: SetListDocument, data });
+          store.writeQuery({ query: SetListDocument, data: newData });
         }
       }).subscribe(() => {
         this.newSetForm.reset();
